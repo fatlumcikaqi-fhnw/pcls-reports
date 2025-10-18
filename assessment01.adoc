@@ -12,14 +12,14 @@ Updates: Watchtower für Auto‑Pull & Rolling Restart.
 
 Ports: 9090 (Eliza), 7070 (Roberta), 8080 (Orchestrator), ggf. 80/443 via Nginx/Port‑NAT.
 
-###Feature
+### Feature
 
 IaC provisioniert VM
 
 Ansible deployt Compose‑Stack.
 
 
-##Archtitectural Overview of targetsystem
+## Archtitectural Overview of targetsystem
 
 image::./AWS_ECS.png[AWS Architecture, align=center]
 
@@ -33,14 +33,14 @@ Secrets: AWS Secrets Manager/SSM Parameter Store (z. B. Tokens, URLs).
 
 Observability: CloudWatch Logs/metrics, ALB Access Logs.
 
-###Feature
+### Feature
 
 IaC (OpenTofu) erzeugt VPC/Subnets/ALB/ECS/SG/Route53.
 
 
 
 
-##Migration Steps between source cloud and target cloud
+## Migration Steps between source cloud and target cloud
 
 
 Sketch the concrete migration steps between the source cloud and the target cloud.
