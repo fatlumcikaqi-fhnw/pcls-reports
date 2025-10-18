@@ -4,43 +4,57 @@
 
 image::./SwitchEngine.png[Switch Engine Architecture, align=center]
 
-Deployment: docker-compose.yml + .env auf 1 VM.
+**Infrastructure provisioning** via OpenTofu IaC
 
-Images: aus GitLab Container Registry (cr.gitlab.fhnw.ch/...).
+- https://gitlab.fhnw.ch/spd/module/pcls/hs25/hs25-group06/iac-infra/-/blob/main/README.md?ref_type=heads[Readme]
 
-Updates: Watchtower für Auto‑Pull & Rolling Restart.
+**Deployment** via Ansible
 
-Ports: 9090 (Eliza), 7070 (Roberta), 8080 (Orchestrator), ggf. 80/443 via Nginx/Port‑NAT.
+- https://gitlab.fhnw.ch/spd/module/pcls/hs25/hs25-group06/iac-confmgmt/-/blob/main/README.md?ref_type=heads[Readme]
 
-### Feature
-
-IaC provisioniert VM
-
-Ansible deployt Compose‑Stack.
 
 
 ## Archtitectural Overview of targetsystem
 
 image::./AWS_ECS.png[AWS Architecture, align=center]
 
-Compute: AWS ECS on Fargate (serverless Tasks/Services).
+**Infrastructure provisioning and Deployment** via OpenTofu IaC
 
-Netz: Public Subnets (ALB), Private Subnets (Tasks), NAT für Outbound Pull.
-
-Images: Pull aus GitLab Container Registry oder gespiegelt nach ECR.
-
-Secrets: AWS Secrets Manager/SSM Parameter Store (z. B. Tokens, URLs).
-
-Observability: CloudWatch Logs/metrics, ALB Access Logs.
-
-### Feature
-
-IaC (OpenTofu) erzeugt VPC/Subnets/ALB/ECS/SG/Route53.
-
-
+- https://gitlab.fhnw.ch/spd/module/pcls/hs25/hs25-group06/iac-aws/-/blob/main/README.md?ref_type=heads[Readme]
 
 
 ## Migration Steps between source cloud and target cloud
 
+**Step 1:** Provision AWS/ECS on Fargate
 
-Sketch the concrete migration steps between the source cloud and the target cloud.
+in https://gitlab.fhnw.ch/spd/module/pcls/hs25/hs25-group06/iac-aws#setup[iac-aws]
+
+- Follow the https://gitlab.fhnw.ch/spd/module/pcls/hs25/hs25-group06/iac-aws#setup[Setup steps] to configure the IaC setup.
+
+- Test the output of the Infrastructure by running
+
+```bash
+tofu plan
+```
+
+- Then provision the Infrastructure by running
+
+```bash
+tofu apply
+```
+
+
+- Test if everything is running as expected in the https://eu-central-1.console.aws.amazon.com/ecs/v2/clusters?region=eu-central-1[AWS console]
+- Test if the https://us-east-1.console.aws.amazon.com/route53/v2/hostedzones?region=eu-central-1#[DNS Entry] now points to AWS.
+
+**Step 2:** Shutdown SwitchEngine Infrastructure
+
+in https://gitlab.fhnw.ch/spd/module/pcls/hs25/hs25-group06/iac-infra[iac-infra]
+
+- Shutdown the SwitchEngine Infrastructure
+
+```bash
+tofu destroy
+```
+
+
