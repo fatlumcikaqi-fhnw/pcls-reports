@@ -1,0 +1,70 @@
+= Assessment 01
+
+== Archtitectural Overview of sourcesystem (AWS)
+
+image::./AWS_ECS.png[AWS Architecture, align=center]
+
+*Infrastructure provisioning and Deployment* via OpenTofu IaC
+
+- https://gitlab.fhnw.ch/spd/module/pcls/hs25/hs25-group06/iac-aws/-/blob/main/README.md?ref_type=heads[Readme]
+
+== Archtitectural Overview of targetsystem (Azure)
+
+*Infrastructure provisioning* via OpenTofu IaC
+
+*Deployment* via deploy.sh script (zip upload)
+
+
+== Migration Steps between source cloud and target cloud
+
+
+=== Situation
+
+The chatbots are deployed on AWS ECS on Fargate and connecting worlds writes the conversation to dynamoDB
+
+=== Migration Steps
+
+. Provision Azure Infra
++
+[source,bash]
+----
+cd infra
+az login
+tofu plan
+tofu apply
+----
++
+*Connecting-worlds* receives an env var (`CHAT_START_PAUSED=true`) that initially pauses the chat
+
+. Deploy Azure Functions
++
+[source,bash]
+----
+cd ..
+./deploy.sh all
+----
++
+This deploys all three functions (eliza, roberta, connecting-worlds). Connecting-worlds will start in paused state.
+
+. Export AWS Credentials and run the migration Script
++
+[source,bash]
+----
+export AWS_ACCESS_KEY_ID=""
+export AWS_SECRET_ACCESS_KEY=""
+export AWS_SESSION_TOKEN=""
+
+az login
+
+./migrate.sh
+----
++
+This will:
+
+* *Step 1*: Pause AWS connecting-worlds (stops writing to DynamoDB)
+* *Step 2*: Copy content of DynamoDB to CosmosDB
+* *Step 3*: Resume Azure connecting-worlds (starts writing to CosmosDB)
+* *Step 4*: Update Route53 DNS record to point to Azure Function App:
+  ** Add TXT record for Azure domain verification (if needed)
+  ** Add custom domain to Azure Function App
+  ** Update A record from AWS ALB alias to Azure Function App IP address
