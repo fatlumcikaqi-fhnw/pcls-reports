@@ -1,12 +1,10 @@
-= Assessment 01
+= Assessment 02
 
 == Archtitectural Overview of sourcesystem (AWS)
 
 image::./AWS_ECS.png[AWS Architecture, align=center]
 
 *Infrastructure provisioning and Deployment* via OpenTofu IaC
-
-- https://gitlab.fhnw.ch/spd/module/pcls/hs25/hs25-group06/iac-aws/-/blob/main/README.md?ref_type=heads[Readme]
 
 == Archtitectural Overview of targetsystem (Azure)
 
