@@ -2,7 +2,7 @@
 
 == Architectural Overview of Source System (AWS)
 
-image::./AWS_ECS.png[AWS Architecture, align=center]
+image::./AWS_Dynamo.png[AWS Architecture, align=center]
 
 *Infrastructure provisioning and deployment* via OpenTofu IaC:
 
@@ -13,6 +13,8 @@ image::./AWS_ECS.png[AWS Architecture, align=center]
 - **DNS**: Route53 for public domain management
 
 == Architectural Overview of Target System (Azure)
+
+image::./Azure_Functions.png[Azure Architecture, align=center]
 
 *Infrastructure provisioning* via OpenTofu IaC:
 
