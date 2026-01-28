@@ -16,10 +16,17 @@ This assessment documents the migration of a microservice environment from a reg
     3.  **Decommissioning:** Graceful shutdown of the legacy SwitchEngine infrastructure using `tofu destroy`.
 * **Key Visuals:** Detailed architectural diagrams for both the internal system logic and external cloud integration.
 
-### Assessment 2: [Title of Assessment 2]
-* **Description:** [Enter a brief description of the task here].
-* **Key Focus:** [e.g., Performance Benchmarking, Scaling, or Security].
-* **Technologies:** [e.g., Azure, Kubernetes, or Prometheus].
+### Assessment 2: Cloud-to-Cloud Migration (AWS to Azure)
+This assessment demonstrates a high-availability migration of a stateful chatbot ecosystem from a containerized AWS architecture to a serverless Azure environment.
+
+* **Description:** A complex automated migration involving database synchronization and zero-downtime DNS cutover.
+* **Source System (AWS):** A microservice stack running on **ECS Fargate** within a private VPC, utilizing **DynamoDB** for persistence and **Route53** for traffic management.
+* **Target System (Azure):** A serverless architecture using **Azure Function Apps (Flex Consumption)**, **CosmosDB**, and **Azure AI Foundry** (GPT-4o-mini integration).
+* **Migration Strategy:** 1. **Automated Provisioning:** Deploying the full Azure stack via **OpenTofu**.
+    2. **Stateful Migration:** A custom migration script that pauses the source (AWS), replicates data from DynamoDB to CosmosDB, and resumes operations on the target (Azure).
+    3. **Traffic Cutover:** Updating **Route53 DNS** records to redirect global traffic from the AWS ALB to the new Azure Function endpoints.
+* **Key Focus:** Data consistency during migration, Infrastructure as Code (IaC) parity, and serverless AI integration.
+* **Technologies:** OpenTofu, AWS (ECS, DynamoDB), Azure (Functions, CosmosDB, AI Foundry), Shell Scripting.
 
 ---
 
