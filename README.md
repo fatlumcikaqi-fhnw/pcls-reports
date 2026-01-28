@@ -29,10 +29,4 @@ This assessment demonstrates a high-availability migration of a stateful chatbot
 * **Technologies:** OpenTofu, AWS (ECS, DynamoDB), Azure (Functions, CosmosDB, AI Foundry), Shell Scripting.
 
 ---
-
-### 📂 File Structure
-* `assessment1.adoc`: Full technical report including detailed migration logic.
-* `diagrams/`: High-resolution architectural schemas for **AWS/ECS Fargate** and **SWITCHengines**.
-
----
 *Developed as part of the FHNW Bachelor of Science in Computer Science.*
